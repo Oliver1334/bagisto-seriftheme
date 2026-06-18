@@ -37,7 +37,7 @@ The docker-compose.yml sets up all the necessary services and mounts the workspa
    docker-compose up
 ```
  
-4. Run the setup script to install Bagisto. The setup script should handle environment file creation:
+4. Run the setup script to install Bagisto .configs/.env is included in the repo pre-configured for docker services:
 ```bash
    sh setup.sh
 ```
@@ -80,7 +80,13 @@ resources/themes/serif-theme/
 ```
 
 ## Assumptions & Decisions
- 
-- **Hardcoded homepage content** — Rather than relying on admin panel theme customisations which are stored in the database and wouldn't persist on clone, the homepage hero and product carousel are hardcoded directly in the blade template.
-- **Tailwind CSS** — Rather than setting up a separate Vite build pipeline, the default Shop theme's compiled Tailwind bundle is reused. This covers all standard utility classes without additional build configuration.
-- **Checkout in test mode** — The checkout uses Bagisto's built-in Cash on Delivery payment method, no payment gateway required.
+
+- **Docker setup** — Chose to run Bagisto in Docker to learn how the relevant dependencies (PHP-FPM, Nginx, MySQL) work together in a containerised environment. Hit an issue early on with PHP-FPM not connecting to Nginx and had to debug by checking the Nginx logs, ultimately fixing it by changing the listen address to `0.0.0.0:9000`.
+
+- **Theme structure** — Spent time understanding how Bagisto's custom theme file structure works before building it. Mirrored the default theme's directory structure so Bagisto's fallback system would correctly pick up the custom theme overrides.
+
+- **Fallback system decisions** — Because of the fallback system I had to decide which parts of the theme to separate out for customisation. Went with the main ecommerce pages as well as a landing page and left things like the header, footer, side cart and layout components to fall back to the default.
+
+- **Hardcoded homepage content** — Rather than relying on admin panel theme customisations which are stored in the database and wouldn't persist on clone, the homepage hero I hardcoded directly and utilised the bagisto shop components to add a carousel.
+
+- **Going forward** — With more time I would look into further developing custom theme packages, which would allow adding custom Vue components and a full Tailwind CSS configuration rather than relying on the default theme's compiled bundle.
