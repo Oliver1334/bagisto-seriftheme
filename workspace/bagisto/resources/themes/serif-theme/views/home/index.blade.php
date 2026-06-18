@@ -14,7 +14,7 @@
                 </p>
 
                 <div class="mt-8 flex justify-center gap-4">
-                    <a style="background-color: #ffffff; color: #1e1b4b;" class="inline-block rounded px-8 py-3 font-semibold shadow-sm transition-colors" href="{{ route('shop.search.index') }}">
+                    <a style="background-color: #ffffff; color: #1e1b4b;" class="inline-block rounded px-8 py-3 font-semibold shadow-sm transition-colors" href="{{ route('shop.product_or_category.index', 'winter-wear') }}">
                         Shop Now
                     </a>
                 </div>
